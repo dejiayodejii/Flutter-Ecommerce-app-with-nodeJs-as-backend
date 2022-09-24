@@ -5,10 +5,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:pushit/constants/global_variables.dart';
 import 'package:pushit/features/auth/model/usermodel.dart';
 
 class AuthService {
-  String uri = 'http://192.168.1.18:3000';
+  String uri = GlobalVariables.uri;
 
   Future<dynamic> signUp(User user) async {
     try {

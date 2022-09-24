@@ -17,5 +17,8 @@
     "README.md": true,
     "test": true,
     "web": true
-  }
+  },
+  "dart.flutterSdkPath": "C:\\Users\\USER-PC\\Documents\\flutter\\bin",
+  "dart.sdkPath":"C:\\Users\\USER-PC\\Documents\\flutter\\bin\\cache\\dart-sdk\\bin",
+  
 }

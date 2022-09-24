@@ -64,7 +64,7 @@ authRouter.post("/api/tokenIsValid", (req, res) => {
 
 
 authRouter.get('/api/getUserData', auth, async(req,res)=>{
-  const user = await User.findById(req.id);
+  const user = await User.findById({req.id});
   res.status(200).json({ ...user._doc, token: req.token });
 });
 
@@ -87,7 +87,10 @@ authRouter.post("/api/signin", async (req, res) => {
 
     //this .... arrange it well in json format
     res.status(200).json({ token, ...user._doc });
-  } catch {}
+  } 
+  catch(e){
+    console.log(e);
+  }
 });
 
 

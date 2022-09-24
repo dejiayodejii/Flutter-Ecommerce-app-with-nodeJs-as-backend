@@ -1,3 +1,4 @@
+// @ts-nocheck
 const express = require("express");
 
 const Product = require("../model/product");
@@ -28,6 +29,7 @@ adminRouter.post("/admin/add-product", admin, async (req, res) => {
 
   adminRouter.get("/admin/get-products", admin, async (req, res) => {
     try {
+      console.log('helloooo');
    const products = await Product.find({});
         return res.json(products);
       } catch (e) {

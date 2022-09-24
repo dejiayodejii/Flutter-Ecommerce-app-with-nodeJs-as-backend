@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:pushit/models/rating.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ProductModel {
   final String name;
@@ -9,8 +11,9 @@ class ProductModel {
   final List<String> images;
   final double quantity;
   final double price;
+  final List<Rating>? rating;
   
-  ProductModel({
+  ProductModel( {
     required this.name,
     required this.category,
      this.id,
@@ -18,6 +21,7 @@ class ProductModel {
     required this.images,
     required this.quantity,
     required this.price,
+    required this.rating,
 
   });
 
@@ -30,19 +34,26 @@ class ProductModel {
       'images': images,
       'quantity': quantity,
       'price': price,
+      'rating': rating,
     };
   }
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
-      name: map['name'] as String,
-      category: map['category'] as String,
-      id: map['_id'] != null ? map['id'] as String : null,
-      description: map['description'] as String,
-      images: List<String>.from((map['images'] as List<String>)),
-      quantity: map['quantity'] as double,
-      price: map['price'] as double,
-    
+      name: map['name'] ?? '',
+      description: map['description'] ?? '',
+      quantity: map['quantity']?.toDouble() ?? 0.0,
+      images: List<String>.from(map['images']),
+      category: map['category'] ?? '',
+      price: map['price']?.toDouble() ?? 0.0,
+      id: map['_id'],
+      rating: map['ratings'] != null
+          ? List<Rating>.from(
+              map['ratings']?.map(
+                (x) => Rating.fromMap(x),
+              ),
+            )
+          : null,
     );
   }
 

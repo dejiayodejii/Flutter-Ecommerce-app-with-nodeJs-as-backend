@@ -11,11 +11,10 @@ import 'package:pushit/models/product.dart';
 import 'package:pushit/provider/user_provider.dart';
 
 class AdminController {
-  final cloudinary =
-      CloudinaryPublic('dynsuyth4', 'xggouulm', cache: false);
+  final cloudinary = CloudinaryPublic('dynsuyth4', 'xggouulm', cache: false);
 
   final AdminService _adminService = AdminService();
-  List<ProductModel> productList = [];
+  List<ProductModel>? productList;
 
   Future<void> addProduct(
       {required BuildContext context,
@@ -41,6 +40,7 @@ class AdminController {
           description: description,
           images: imageUrl,
           quantity: quantity,
+          rating: [],
           price: price);
 
       ProductModel res = await _adminService.addProduct(
@@ -52,22 +52,30 @@ class AdminController {
     }
   }
 
-  void getAllProduct(BuildContext context) {
+  void getAllProduct(BuildContext context, Function onSuccess) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    print('one');
     _adminService.getAllProduct(userProvider.getUser.token).then((value) {
-      print(value);
-      productList.addAll(value);
+      print('twoo');
+      productList = value;
+      onSuccess();
     }).catchError((e) {
       print(e.toString());
     });
   }
 
-    void deleteProduct(BuildContext context) {
+  void deleteProduct(
+      {required BuildContext context,
+      required ProductModel product,
+      required int index,
+      required Function onSuccess}) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    _adminService.getAllProduct(userProvider.getUser.token).then((value) {
+    _adminService
+        .deleteProduct(token: userProvider.getUser.token, product: product)
+        .then((value) {
       print(value);
+      productList!.removeAt(index);
+      onSuccess();
       showSnackBar(context, 'Product deleted Successfully!');
     }).catchError((e) {
       print(e.toString());

@@ -3,10 +3,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pushit/constants/global_variables.dart';
 import 'package:pushit/models/product.dart';
 
 class AdminService {
-  String uri = 'http://192.168.1.18:3000';
+  String uri = GlobalVariables.uri;
 
   Future<dynamic> addProduct(
       {required ProductModel product, required String token}) async {
@@ -40,8 +41,11 @@ class AdminService {
       );
       if (res.statusCode == 200) {
         List body = jsonDecode(res.body);
-        return Future.value(body.map((e) => ProductModel.fromJson(jsonEncode(e))).toList());
+        print('herrrere');
+        return Future.value(
+            body.map((e) => ProductModel.fromJson(jsonEncode(e))).toList());
       } else {
+        print('heeeeere');
         return Future.error(res);
       }
     } on Exception catch (e) {
@@ -49,12 +53,12 @@ class AdminService {
     }
   }
 
-
-    Future<dynamic> deleteProduct({required String token,required ProductModel product}) async {
+  Future<dynamic> deleteProduct(
+      {required String token, required ProductModel product}) async {
     try {
       http.Response res = await http.post(
         Uri.parse('$uri/admin/get-products'),
-         body: jsonEncode({
+        body: jsonEncode({
           'id': product.id,
         }),
         headers: <String, String>{

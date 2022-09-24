@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 //import from other files
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const productRouter = require("./routes/product");
 
 
 //initializations
@@ -16,6 +17,7 @@ const DB = "mongodb+srv://ayodeji:ayanbunmi@cluster0.efa4czx.mongodb.net/?retryW
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
+app.use(productRouter);
 
 
 //connections to db

@@ -6,6 +6,7 @@ import 'package:pushit/constants/global_variables.dart';
 import 'package:pushit/features/home/widgets/address_box.dart';
 import 'package:pushit/features/home/widgets/carousel_images.dart';
 import 'package:pushit/features/home/widgets/top_categories.dart';
+import 'package:pushit/features/search/views/search_screen.dart';
 import 'package:pushit/provider/user_provider.dart';
 
 class Home extends StatelessWidget {
@@ -41,7 +42,15 @@ class Home extends StatelessWidget {
                         borderRadius: BorderRadius.circular(7),
                         elevation: 1,
                         child: TextFormField(
-                          //onFieldSubmitted: navigateToSearchScreen,
+                          onFieldSubmitted: (value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchScreen(
+                                        searchQuery: value,
+                                      )),
+                            );
+                          },
                           decoration: InputDecoration(
                             prefixIcon: InkWell(
                               onTap: () {},
@@ -102,18 +111,14 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-           const  AddressBox(),
+            const AddressBox(),
             const SizedBox(height: 10),
-           const TopCategories(),
+            const TopCategories(),
             const SizedBox(height: 10),
             const CarouselImage(),
-            
-
           ],
         ),
       ),
     );
   }
 }
-
-
